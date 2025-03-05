@@ -1,0 +1,13 @@
+name: Terraform Checks
+on:
+  push:
+    branches: [master]
+    paths:
+      - "terraform/**"
+  pull_request:
+    paths:
+      - "terraform/**"
+
+jobs:
+  terraform-checks:
+    uses: petebdeblois/github-shared-workflows/.github/workflows/terraform-checks.yml@master

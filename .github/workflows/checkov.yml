@@ -1,0 +1,16 @@
+name: Checkov
+on:
+  workflow_call:
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install checkov
+        run: "pip install checkov"
+      - name: Run checkov
+        run: "checkov --compact --quiet --directory ./terraform"

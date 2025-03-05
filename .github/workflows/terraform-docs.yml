@@ -1,0 +1,30 @@
+name: Terraform-docs
+on:
+  workflow_call:
+
+jobs:
+  terraform-fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install terraform-docs
+        run: |
+          curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.19.0/terraform-docs-v0.19.0-$(uname)-amd64.tar.gz
+          if [ "$(sha256sum terraform-docs.tar.gz)" != "dd741a0ece81059a478684b414d95d72b8b74fa58f50ac4036b4e8b56130d64b  terraform-docs.tar.gz" ]; then echo "Failed to download terraform-docs due to a checksum mismatch"; exit 1; fi
+
+          tar -xzf terraform-docs.tar.gz
+          mkdir -p "$HOME/.local/bin"
+          mv terraform-docs "$HOME/.local/bin/terraform-docs"
+          rm terraform-docs.tar.gz
+          chmod +x "$HOME/.local/bin/terraform-docs"
+
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Check outdated docs
+        run: |
+          echo "To generate docs, use https://github.com/terraform-docs/terraform-docs."
+          echo -e "A usage example can be found in this repository in  the file `.github/workflows/infrastructure-build.yaml`\n"
+
+          for project_dir in $(find terraform/modules -name '*.tf' -exec dirname {} \; | uniq); do
+            terraform-docs --output-check --output-file README.md md "$project_dir"
+          done
