@@ -38,8 +38,6 @@ zstyle ':omz:plugins:alias-finder' cheaper yes # disabled by default
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
 zinit snippet OMZP::aws
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 zinit snippet OMZP::web-search
 zinit snippet OMZP::vscode
@@ -67,8 +65,6 @@ autoload -U +X bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
 zinit cdreplay -q
 
-source <(kubectl completion zsh)
-. <(flux completion zsh)
 #
 # Init oh-my-posh
 eval "$(oh-my-posh init zsh --config ~/.omp.default.json)"

@@ -23,7 +23,6 @@ alias cal="cal -m -3"
 # alias gs="git svn"
 alias python="python3"
 
-alias kjob='kubectl --kubeconfig ~/.kube/configjobs '
 
 alias h="history"
 alias h1="history 10"
